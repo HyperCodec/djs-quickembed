@@ -5,7 +5,7 @@ pub use discord::*;
 use regex::Regex;
 pub use template::*;
 
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 
 use wasm_bindgen::prelude::*;
 use js_sys::Error;
@@ -15,8 +15,8 @@ const TEMPLATE_REGEX: &str = r"\{%\s*(.*?)\s*%\}";
 
 #[wasm_bindgen]
 pub fn parse_template(template: &str) -> JsResult {
-    let regex = Regex::new(TEMPLATE_REGEX).unwrap();
-    let keywords: Vec<_> = regex.find_iter(template).map(|m| m.as_str().trim().to_string()).collect();
+    let re = Regex::new(TEMPLATE_REGEX).unwrap();
+    let keywords: HashSet<_> = re.captures_iter(template).map(|c| c[1].to_string()).collect();
 
     let internal: APIEmbed = toml::from_str(template)
         .map_err(|_| Error::new("Failed to parse template"))?;
@@ -30,7 +30,7 @@ pub fn parse_template(template: &str) -> JsResult {
 }
 
 #[wasm_bindgen]
-pub fn generate_embed(template: JsValue, keywords: JsValue) -> JsResult {
+pub fn render(template: JsValue, keywords: JsValue) -> JsResult {
     let keywords: HashMap<String, String> = serde_wasm_bindgen::from_value(keywords)
         .map_err(|_| Error::new("Failed to parse keywords"))?;
 

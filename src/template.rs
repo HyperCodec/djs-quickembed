@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 
 use crate::discord::*;
 use js_sys::Error;
@@ -7,7 +7,7 @@ use regex::Regex;
 
 #[derive(Serialize, Deserialize)]
 pub struct EmbedTemplate {
-    pub keywords: Vec<String>,
+    pub keywords: HashSet<String>,
     pub internal: APIEmbed,
 }
 
