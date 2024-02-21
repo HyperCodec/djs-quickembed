@@ -12,38 +12,12 @@ pub struct EmbedTemplate {
 }
 
 impl EmbedTemplate {
-    /*
-    #[deprecated]
-    pub fn generate(mut self, keywords: HashMap<String, String>) -> Result<APIEmbed, Error> {
-        for k in self.keywords {
-            let re = Regex::new(&format!(r"{{\s*{}\s*}}", k)).unwrap();
-
-            if let Some(v) = keywords.get(&k) {
-                self.internal.title = re.replace_all(&self.internal.title, v).to_string();
-                self.internal.description = re.replace_all(&self.internal.description, v).to_string();
-
-                if let Some(url) = self.internal.url {
-                    self.internal.url = Some(re.replace_all(&url, v).to_string());
-                }
-
-                if let Some(mut footer) = self.internal.footer {
-                    footer.text = re.replace_all(&footer.text, v).to_string();
-                    self.internal.footer = Some(footer);
-                }
-            } else {
-                return Err(Error::new("Missing keyword"));
-            }
-        }
-
-        Ok(self.internal)
-    }
-    */
-
     pub fn generate(mut self, keywords: HashMap<String, String>) -> Result<APIEmbed, Error> {
         if self.keywords.len() != keywords.len() {
             return Err(Error::new("Missing template keyword"));
         }
 
+        // maybe not optimally fast (although still takes microseconds) but it works and is probably the least lines of code
         let mut s = toml::to_string(&self.internal).unwrap();
 
         for (k, v) in keywords.iter() {
