@@ -14,16 +14,13 @@ type JsResult = Result<JsValue, Error>;
 const TEMPLATE_REGEX: &str = r"\{%\s*(.*?)\s*%\}";
 
 #[wasm_bindgen]
-pub fn parse_template(template: &str) -> JsResult {
+pub fn parse_template(template: String) -> JsResult {
     let re = Regex::new(TEMPLATE_REGEX).unwrap();
-    let keywords: HashSet<_> = re.captures_iter(template).map(|c| c[1].to_string()).collect();
-
-    let internal: APIEmbed = toml::from_str(template)
-        .map_err(|e| Error::new(&format!("Failed to parse template: {:?}", e)))?;
+    let keywords: HashSet<_> = re.captures_iter(&template).map(|c| c[1].to_string()).collect();
 
     let template = EmbedTemplate {
         keywords,
-        internal,
+        internal: template,
     };
 
     Ok(serde_wasm_bindgen::to_value(&template).unwrap())
