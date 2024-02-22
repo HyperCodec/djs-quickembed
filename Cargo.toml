@@ -1,7 +1,11 @@
 [package]
 name = "quickembed"
+description = "Quickly template discord.js embeds"
 version = "0.1.0"
 edition = "2021"
+authors = ["Inflectrix"]
+repository = "https://github.com/inflectrix/quickembed"
+license = "MIT"
 
 [lib]
 crate-type = ["cdylib"]

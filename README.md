@@ -39,3 +39,6 @@ Finally, you render your embed with `QuickEmbed.render` and send it:
 let helloEmbed = QuickEmbed.render(helloTemplate, { name: "World" });
 channel.send({ embeds: [helloEmbed] });
 ```
+
+### License
+This package is licensed under the MIT license.
