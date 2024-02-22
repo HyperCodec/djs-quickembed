@@ -19,7 +19,7 @@ pub fn parse_template(template: &str) -> JsResult {
     let keywords: HashSet<_> = re.captures_iter(template).map(|c| c[1].to_string()).collect();
 
     let internal: APIEmbed = toml::from_str(template)
-        .map_err(|_| Error::new("Failed to parse template"))?;
+        .map_err(|e| Error::new(&format!("Failed to parse template: {:?}", e)))?;
 
     let template = EmbedTemplate {
         keywords,
@@ -32,10 +32,10 @@ pub fn parse_template(template: &str) -> JsResult {
 #[wasm_bindgen]
 pub fn render(template: JsValue, keywords: JsValue) -> JsResult {
     let keywords: HashMap<String, String> = serde_wasm_bindgen::from_value(keywords)
-        .map_err(|_| Error::new("Failed to parse keywords"))?;
+        .map_err(|e| Error::new(&format!("Failed to parse keywords: {:?}", e)))?;
 
     let template: EmbedTemplate = serde_wasm_bindgen::from_value(template)
-        .map_err(|_| Error::new("Failed to parse generate"))?;
+        .map_err(|e| Error::new(&format!("Failed to parse template: {:?}", e)))?;
 
     Ok(serde_wasm_bindgen::to_value(&template.generate(keywords)?).unwrap())
 }

@@ -14,10 +14,10 @@ pub struct EmbedTemplate {
 impl EmbedTemplate {
     pub fn generate(mut self, keywords: HashMap<String, String>) -> Result<APIEmbed, Error> {
         if self.keywords.len() != keywords.len() {
-            return Err(Error::new("Missing template keyword"));
+            return Err(Error::new(&format!("Keyword mismatch: expected {} keywords, got {}", self.keywords.len(), keywords.len())));
         }
 
-        // maybe not optimally fast (although still takes microseconds) but it works and is probably the least lines of code
+        // maybe not as fast (although still takes microseconds) but it works and is probably the least lines of code
         let mut s = toml::to_string(&self.internal).unwrap();
 
         for (k, v) in keywords.iter() {
@@ -26,7 +26,7 @@ impl EmbedTemplate {
         }
 
         self.internal = toml::from_str(&s)
-            .map_err(|_| Error::new("Failed to parse generated template"))?;
+            .map_err(|e| Error::new(&format!("Failed to parse generated template: {:?}", e)))?;
 
         Ok(self.internal)
     }
