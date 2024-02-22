@@ -1,10 +1,10 @@
 [package]
-name = "quickembed"
+name = "djs-quickembed"
 description = "Quickly template discord.js embeds"
 version = "0.1.0"
 edition = "2021"
 authors = ["Inflectrix"]
-repository = "https://github.com/inflectrix/quickembed"
+repository = "https://github.com/inflectrix/djs-quickembed"
 license = "MIT"
 
 [lib]
