@@ -12,6 +12,8 @@ pub struct APIEmbed {
     pub video: Option<EmbedVideo>,
     pub provider: Option<EmbedProvider>,
     pub author: Option<EmbedAuthor>,
+
+    #[serde(alias = "field")]
     pub fields: Option<Vec<EmbedField>>,
 }
 
