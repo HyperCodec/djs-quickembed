@@ -1,4 +1,4 @@
-# quickembed
+# djs-quickembed
 A simple npm package written in Rust to template discord.js embeds.
 
 Uses the [APIEmbed](https://discord-api-types.dev/api/discord-api-types-v10/interface/APIEmbed) structure as a basis for the serialization model (some optional properties such as timestamp are ommitted).
@@ -7,7 +7,7 @@ Uses the [APIEmbed](https://discord-api-types.dev/api/discord-api-types-v10/inte
 First, import the package (assuming you have installed it with `npm` already):
 ```js
 // src/index.mjs
-import * as QuickEmbed from "quickembed";
+import * as QuickEmbed from "djs-quickembed";
 ```
 
 Next, you must create a TOML string with the embed template. This can be done by many means, but the best way of doing it is creating a simple TOML file and reading it:
