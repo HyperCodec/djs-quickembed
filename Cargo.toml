@@ -3,7 +3,7 @@ name = "djs-quickembed"
 description = "Quickly template discord.js embeds"
 version = "0.1.0"
 edition = "2021"
-authors = ["Inflectrix"]
+authors = ["HyperCodec"]
 repository = "https://github.com/inflectrix/djs-quickembed"
 license = "MIT"
 
